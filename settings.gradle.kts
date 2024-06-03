@@ -15,4 +15,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Ruz"
 include(":app")
- 
+include(":feature:splash")
+include(":feature:main")
+include(":common")
+include(":network")
+include(":core")
