@@ -5,10 +5,10 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.radsham.splash.SplashScreen
 import com.radsham.common.NavScreen
 import com.radsham.main.MainScreen
 import com.radsham.main.MainViewModel
+import com.radsham.splash.SplashScreen
 
 @Composable
 fun SetupNavGraph(
@@ -16,7 +16,6 @@ fun SetupNavGraph(
     showTopBar: MutableState<Boolean>,
 ) {
     val navController = rememberNavController()
-
     NavHost(navController, startDestination = NavScreen.SPLASH_SCREEN) {
         composable(NavScreen.SPLASH_SCREEN) {
             SplashScreen(navController, showTopBar)

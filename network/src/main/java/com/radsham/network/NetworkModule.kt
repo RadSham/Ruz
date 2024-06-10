@@ -1,7 +1,5 @@
-package com.radsham.core
+package com.radsham.network
 
-import com.radsham.network.FirebaseDatasource
-import com.radsham.network.FirebaseDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,7 +11,6 @@ abstract class NetworkModule {
 
     @Binds
     abstract fun bindFirebaseDatasource(
-        firebaseDatasourceImpl:
-        FirebaseDatasourceImpl
+        firebaseDatasourceImpl: FirebaseDatasourceImpl
     ): FirebaseDatasource
 }

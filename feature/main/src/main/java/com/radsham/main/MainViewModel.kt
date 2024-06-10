@@ -3,8 +3,7 @@ package com.radsham.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.radsham.common.Result
-import com.radsham.core.FirebaseRepository
-import com.radsham.main.model.EventEntity
+import com.radsham.common.model.EventEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,17 +21,8 @@ class MainViewModel @Inject constructor(
     fun fetchEventsList() = viewModelScope.launch {
         firebaseRepository.listenForEvents()
             .catch { _viewState.value = Result.Error(it) }
-            .collect { stringsList ->
-                val allEventsList =
-                    List(10) {
-                        EventEntity(
-                            stringsList[0],
-                            stringsList[1],
-                            stringsList[2],
-                            stringsList[3]
-                        )
-                    }
-                _viewState.emit(Result.Success(allEventsList))
+            .collect {
+                _viewState.emit(Result.Success(it))
             }
     }
 }

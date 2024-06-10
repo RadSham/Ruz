@@ -15,7 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.radsham.main.model.EventEntity
+import com.radsham.common.model.EventEntity
 
 @Composable
 fun EventsScreen(

@@ -1,4 +1,4 @@
-package com.radsham.main.model
+package com.radsham.main
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
