@@ -71,22 +71,24 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
-    //Navigation
-    implementation(libs.androidx.navigation.compose)
+    /*//Navigation
+    implementation(libs.androidx.navigation.compose)*/
 
     // Dependency injection
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //Firebase
+    /*//Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.database)
+    implementation(libs.firebase.database)*/
 
     //Features
+    implementation(project(":main"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:home"))
     implementation(project(":feature:newevent"))
     implementation(project(":core_api"))
+    implementation(project(":core_api_impl"))
 }

@@ -43,7 +43,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.android.material)
-    implementation(libs.firebase.database.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,7 +60,9 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
 
+    //Firebase
+    implementation(libs.firebase.database.ktx)
+
     //Feature
     implementation(project(":core_api"))
-    implementation(project(":network"))
 }
