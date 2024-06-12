@@ -53,5 +53,5 @@ dependencies {
     implementation(libs.firebase.database)
 
     //Feature
-    implementation(project(":common"))
+    implementation(project(":core_api"))
 }

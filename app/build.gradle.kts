@@ -86,6 +86,7 @@ dependencies {
 
     //Features
     implementation(project(":feature:splash"))
-    implementation(project(":feature:main"))
-    implementation(project(":common"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:newevent"))
+    implementation(project(":core_api"))
 }

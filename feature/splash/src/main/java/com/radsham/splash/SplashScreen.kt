@@ -6,18 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.radsham.core_api.NavScreen
 import kotlinx.coroutines.delay
-import com.radsham.common.NavScreen
 
 @Composable
-fun SplashScreen(navController: NavHostController, showTopBar: MutableState<Boolean>) {
+fun SplashScreen(navController: NavHostController) {
 
     LaunchedEffect(key1 = true) {
         delay(2000)

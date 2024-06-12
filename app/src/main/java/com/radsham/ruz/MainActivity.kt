@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.radsham.main.MainViewModel
+import com.radsham.home.MainViewModel
 import com.radsham.ruz.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

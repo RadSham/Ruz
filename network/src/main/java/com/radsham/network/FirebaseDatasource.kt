@@ -1,6 +1,6 @@
 package com.radsham.network
 
-import com.radsham.common.model.EventEntity
+import com.radsham.core_api.model.EventEntity
 import kotlinx.coroutines.flow.Flow
 
 

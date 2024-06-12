@@ -58,5 +58,5 @@ dependencies {
     implementation(libs.lottie.compose)
 
     //Features
-    implementation(project(":common"))
+    implementation(project(":core_api"))
 }

@@ -16,6 +16,7 @@ dependencyResolutionManagement {
 rootProject.name = "Ruz"
 include(":app")
 include(":feature:splash")
-include(":feature:main")
-include(":common")
+include(":feature:home")
+include(":core_api")
 include(":network")
+include(":feature:newevent")
