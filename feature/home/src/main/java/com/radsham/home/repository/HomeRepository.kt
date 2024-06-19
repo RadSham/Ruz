@@ -4,7 +4,7 @@ import com.radsham.core_api.FirebaseDatasource
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FirebaseRepository @Inject constructor(
+class HomeRepository @Inject constructor(
     private val firebaseDatasource: FirebaseDatasource
 ) {
 

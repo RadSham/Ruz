@@ -63,6 +63,9 @@ dependencies {
     //Firebase
     implementation(libs.firebase.database.ktx)
 
+    //Coil
+    implementation(libs.coil.compose)
+
     //Feature
     implementation(project(":core_api"))
 }

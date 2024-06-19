@@ -1,10 +1,10 @@
 [versions]
+activity = "1.9.0@aar"
 agp = "8.4.1"
 coilCompose = "2.5.0"
 coreSplashscreen = "1.1.0-rc01"
 firebaseBom = "33.1.0"
 hiltAndroid = "2.51.1"
-kotlinxCoroutinesCore = "1.8.0"
 ksp = "1.9.23-1.0.19"
 gms = "4.4.2"
 hiltNavigationCompose = "1.2.0"
@@ -23,8 +23,10 @@ navVersion = "2.7.7"
 kotlinComposeCompiler = "1.5.13"
 firebaseDatabase = "21.0.0"
 firebaseDatabaseKtx = "21.0.0"
+firebaseStorageKtx = "21.0.0"
 
 [libraries]
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -54,6 +56,7 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

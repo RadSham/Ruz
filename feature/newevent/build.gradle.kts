@@ -64,6 +64,12 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
 
+    //ImagePicker
+    implementation(libs.androidx.activity.ktx)
+
+    //Coil
+    implementation(libs.coil.compose)
+
     //Feature
     implementation(project(":core_api"))
 }

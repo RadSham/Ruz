@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">new event</string>
-    <string name="empty_image">empty image</string>
+    <string name="event_image">event image</string>
 </resources>
