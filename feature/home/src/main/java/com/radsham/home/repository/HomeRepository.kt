@@ -10,7 +10,7 @@ class HomeRepository @Inject constructor(
 
     fun listenForEvents() = flow {
         while (true) {
-            firebaseDatasource.getEventsList().collect {
+            firebaseDatasource.getAllEvents().collect {
                 emit(it)
             }
         }

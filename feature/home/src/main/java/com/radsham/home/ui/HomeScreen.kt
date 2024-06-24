@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,48 +36,41 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.radsham.core_api.NavScreen
 import com.radsham.core_api.Result
-import com.radsham.home.viewmodel.HomeViewModel
-import com.radsham.home.model.NavigationItem
 import com.radsham.home.R
+import com.radsham.home.model.NavigationItem
+import com.radsham.home.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navController: NavHostController
-){
+fun HomeScreen(navController: NavHostController) {
     val viewModel: HomeViewModel = hiltViewModel()
-
     val viewState by viewModel.viewState.collectAsState()
-
-    LaunchedEffect(key1 = viewModel, block = { viewModel.fetchEventsList() })
-
+    LaunchedEffect(key1 = viewModel, block = { viewModel.fetchAllEvents() })
     val navigationItemsList = listOf(
         NavigationItem(
-            title = "Add new event",
+            title = stringResource(R.string.authentication),
+            selectedIcon = Icons.Filled.AccountCircle,
+            unselectedIcon = Icons.Outlined.AccountCircle,
+            route = NavScreen.AUTH
+        ), NavigationItem(
+            title = stringResource(R.string.create_new_event),
             selectedIcon = Icons.Filled.Add,
             unselectedIcon = Icons.Outlined.Add,
             route = NavScreen.NEW_EVENT_SCREEN
-        ),
-        NavigationItem(
-            title = "Info",
-            selectedIcon = Icons.Filled.Info,
-            unselectedIcon = Icons.Outlined.Info,
-            route = NavScreen.HOME_SCREEN
-        ),
-        NavigationItem(
-            title = "Settings",
+        ), NavigationItem(
+            title = stringResource(R.string.settings),
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
             route = NavScreen.HOME_SCREEN
         )
     )
-
     //side bar menu
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -99,8 +92,9 @@ fun HomeScreen(
                         label = { Text(text = item.title) },
                         selected = index == selectedItemIndex,
                         onClick = {
-                            navController.navigate(item.route){
+                            navController.navigate(item.route) {
                                 launchSingleTop = true
+                                restoreState = true
                             }
                             selectedItemIndex = index
                             scope.launch {
@@ -111,44 +105,40 @@ fun HomeScreen(
                             Icon(
                                 imageVector = if (index == selectedItemIndex) {
                                     item.selectedIcon
-                                } else item.unselectedIcon,
-                                contentDescription = item.title
+                                } else item.unselectedIcon, contentDescription = item.title
                             )
-                        },
-                        /*badge = {
+                        },/*badge = {
                             Text(text = index.toString())
                         })*/
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
                 }
             }
-        },
-        drawerState = drawerState
+        }, drawerState = drawerState
     ) {
-        Scaffold(
-            topBar = {
-                    TopAppBar(
-                        title = {},
-                        navigationIcon = {
-                            IconButton(onClick = {
-                                scope.launch {
-                                    drawerState.open()
-                                }
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Menu,
-                                    contentDescription = "Menu"
-                                )
-                            }
-                        }
+        Scaffold(topBar = {
+            TopAppBar(title = {}, navigationIcon = {
+                IconButton(onClick = {
+                    scope.launch {
+                        drawerState.open()
+                    }
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Menu, contentDescription = "Menu"
                     )
-            }
-        ) { paddingValues ->
+                }
+            })
+        }) { paddingValues ->
             when (val state = viewState) {
                 is Result.Loading -> LoadingState(paddingValues)
                 is Result.Success -> {
-                    AllEvents(paddingValues = paddingValues, eventsList = state.data)
+                    AllEvents(
+                        paddingValues = paddingValues,
+                        navController = navController,
+                        eventsList = state.data
+                    )
                 }
+
                 is Result.Error -> TODO()
             }
         }

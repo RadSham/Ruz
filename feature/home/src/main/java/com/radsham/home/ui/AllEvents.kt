@@ -1,7 +1,9 @@
 package com.radsham.home.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,24 +19,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.radsham.core_api.NavScreen
 import com.radsham.core_api.model.EventEntity
+import com.radsham.home.R
 
 @Composable
 fun AllEvents(
     paddingValues: PaddingValues,
-    eventsList: List<EventEntity>,
+    navController: NavHostController,
+    eventsList: List<EventEntity>
 ) {
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
         items(eventsList) {
-            EventCard(it)
+            EventCard(navController, it)
         }
     }
 }
 
 @Composable
-fun EventCard(eventEntity: EventEntity){
+fun EventCard(navController: NavHostController, eventEntity: EventEntity) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,7 +52,8 @@ fun EventCard(eventEntity: EventEntity){
                 2.dp,
                 ambientColor = MaterialTheme.colorScheme.primary,
                 spotColor = MaterialTheme.colorScheme.secondary
-            ),
+            )
+            .clickable { navController.navigate(NavScreen.EVENT_DETAILS_SCREEN + "/" + eventEntity.id) },
         shape = RoundedCornerShape(3.dp),
         border = BorderStroke(1.dp, Color.Black)
     ) {
@@ -52,15 +62,21 @@ fun EventCard(eventEntity: EventEntity){
                 .fillMaxWidth()
                 .height(150.dp)
                 .border(BorderStroke(1.dp, Color.LightGray))
-            AsyncImage(
-                modifier = imageModifier,
-                model = eventEntity.imageUri,
-                contentDescription = "eventImage"
-            )
-            Text(text = eventEntity.name)
-            Text(text = eventEntity.category)
-            Text(text = eventEntity.description)
-            Text(text = eventEntity.contacts)
+            if (eventEntity.imageUri == "")
+                Image(
+                    modifier = imageModifier,
+                    painter = painterResource(R.drawable.baseline_image_search_24),
+                    contentScale = ContentScale.Fit,
+                    contentDescription = stringResource(id = R.string.event_image)
+                )
+            else
+                AsyncImage(
+                    modifier = imageModifier,
+                    model = eventEntity.imageUri,
+                    contentDescription = stringResource(id = R.string.event_image)
+                )
+            Text(text = eventEntity.name, maxLines = 2)
+            Text(text = eventEntity.location, maxLines = 2)
         }
     }
 }

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">new event</string>
     <string name="event_image">event image</string>
+    <string name="add_new_event">Add new event</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="category">Category</string>
+    <string name="description">Description</string>
+    <string name="contacts">Contacts</string>
+    <string name="empty_name">Name cannot be empty</string>
+    <string name="empty_location">Location cannot be empty</string>
+    <string name="empty_category">Category cannot be empty</string>
+    <string name="empty_description">Description cannot be empty</string>
+    <string name="empty_contacts">Contacts cannot be empty</string>
 </resources>

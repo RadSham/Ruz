@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Home</string>
+    <string name="event_image">Event image</string>
+    <string name="authentication">Authentication</string>
+    <string name="create_new_event">Create new event</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
     private val _viewState = MutableStateFlow<Result<List<EventEntity>>>(Result.Loading("Loading"))
     val viewState = _viewState.asStateFlow()
 
-    fun fetchEventsList() = viewModelScope.launch {
+    fun fetchAllEvents() = viewModelScope.launch {
         homeRepository.listenForEvents()
             .catch { _viewState.value = Result.Error(it) }
             .collect {

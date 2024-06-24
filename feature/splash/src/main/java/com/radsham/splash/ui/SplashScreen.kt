@@ -1,6 +1,5 @@
 package com.radsham.splash.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -26,6 +25,8 @@ fun SplashScreen(navController: NavHostController) {
             popUpTo(NavScreen.SPLASH_SCREEN) {
                 inclusive = true
             }
+            launchSingleTop = true
+            restoreState = true
         }
     }
 
@@ -33,7 +34,6 @@ fun SplashScreen(navController: NavHostController) {
 
     Box(modifier = Modifier.systemBarsPadding()) {
         Column {
-            Log.d("MyLog", "SplashScreen")
             LottieAnimation(composition = composition)
         }
     }

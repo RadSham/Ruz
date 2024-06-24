@@ -89,6 +89,8 @@ dependencies {
     implementation(project(":feature:splash"))
     implementation(project(":feature:home"))
     implementation(project(":feature:newevent"))
+    implementation(project(":feature:eventdetails"))
+    implementation(project(":feature:auth"))
     implementation(project(":core_api"))
     implementation(project(":core_api_impl"))
 }

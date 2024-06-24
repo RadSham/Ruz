@@ -16,7 +16,7 @@ class NewEventViewModel @Inject constructor(
     private val newEventRepository: NewEventRepository
 ) : ViewModel() {
 
-    fun sendNewEvent(eventEntity: EventEntity) = viewModelScope.launch {
-        newEventRepository.sendNewEvent(appContext, eventEntity)
+    fun createNewEvent(eventEntity: EventEntity) = viewModelScope.launch {
+        newEventRepository.createNewEvent(appContext, eventEntity)
     }
 }

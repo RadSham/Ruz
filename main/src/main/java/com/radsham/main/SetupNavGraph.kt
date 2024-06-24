@@ -13,5 +13,7 @@ fun SetupNavGraph(featureProvider: Map<String, @JvmSuppressWildcards FeatureApi>
         featureProvider[NavScreen.SPLASH_SCREEN]?.registerGraph(this, navController)
         featureProvider[NavScreen.HOME_SCREEN]?.registerGraph(this, navController)
         featureProvider[NavScreen.NEW_EVENT_SCREEN]?.registerGraph(this, navController)
+        featureProvider[NavScreen.EVENT_DETAILS_SCREEN]?.registerGraph(this, navController)
+        featureProvider[NavScreen.AUTH]?.registerGraph(this, navController)
     }
 }
