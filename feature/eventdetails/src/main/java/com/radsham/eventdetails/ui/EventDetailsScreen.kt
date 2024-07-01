@@ -1,6 +1,9 @@
 package com.radsham.home.ui
 
+import android.widget.Toast
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +30,8 @@ import com.radsham.eventdetails.viewmodel.EventDetailsViewModel
 @Composable
 fun EventDetailsScreen(
     navController: NavHostController,
-    eventId: String?
+    mainPaddingValues: PaddingValues,
+    eventId: String?,
 ) {
     val viewModel: EventDetailsViewModel = hiltViewModel()
 
@@ -56,7 +60,9 @@ fun EventDetailsScreen(
                 }
             )
         },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .padding(mainPaddingValues)
+            .fillMaxWidth()
     ) { paddingValues ->
         when (val state = viewState) {
             is Result.Loading -> LoadingState(paddingValues)
@@ -64,8 +70,11 @@ fun EventDetailsScreen(
                 EventDetails(paddingValues, state.data)
             }
 
-            is Result.Error -> TODO()
+            is Result.Error -> Toast.makeText(
+                viewModel.appContext,
+                state.exception.message,
+                Toast.LENGTH_SHORT
+            ).show()
         }
-        println(eventId)
     }
 }

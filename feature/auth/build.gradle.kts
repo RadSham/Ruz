@@ -54,7 +54,6 @@ dependencies {
 
     //Firebase Authentication
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
 
     //Preview
     implementation(libs.androidx.ui.tooling.preview)

@@ -91,6 +91,8 @@ dependencies {
     implementation(project(":feature:newevent"))
     implementation(project(":feature:eventdetails"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:account"))
+    implementation(project(":feature:signin"))
     implementation(project(":core_api"))
     implementation(project(":core_api_impl"))
 }

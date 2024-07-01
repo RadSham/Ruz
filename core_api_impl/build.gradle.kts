@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.auth)
 
     //Feature
     implementation(project(":core_api"))

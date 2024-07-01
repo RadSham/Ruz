@@ -1,11 +1,13 @@
 package com.radsham.eventdetails.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.radsham.core_api.Result
 import com.radsham.core_api.model.EventEntity
 import com.radsham.eventdetails.repository.EventDetailsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -15,12 +17,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventDetailsViewModel @Inject constructor(
+    @ApplicationContext val appContext: Context,
     private val eventDetailsRepository: EventDetailsRepository
 ) : ViewModel() {
     private val _viewState = MutableStateFlow<Result<EventEntity>>(Result.Loading("Loading"))
     val viewState = _viewState.asStateFlow()
 
-    fun fetchEvent(eventId:String) = viewModelScope.launch {
+    fun fetchEvent(eventId: String) = viewModelScope.launch {
         eventDetailsRepository.listenForEvent(eventId)
             .catch { _viewState.value = Result.Error(it) }
             .collect {

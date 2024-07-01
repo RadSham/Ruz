@@ -1,18 +1,22 @@
 package com.radsham.core_api_impl
 
-import android.content.Context
 import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.auth.userProfileChangeRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
 import com.google.firebase.database.getValue
 import com.google.firebase.storage.storage
-import com.radsham.core_api.EventCreateListener
 import com.radsham.core_api.FirebaseDatasource
+import com.radsham.core_api.listener.EventCreateListener
+import com.radsham.core_api.listener.UserCreateListener
+import com.radsham.core_api.listener.UserSignInListener
 import com.radsham.core_api.model.EventEntity
+import com.radsham.core_api.model.User
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -21,6 +25,19 @@ import javax.inject.Inject
 class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     private var firebaseDatabaseRef = Firebase.database.reference
     private val firebaseStorageRef = Firebase.storage.reference
+    private var firebaseAuth = Firebase.auth
+
+    override suspend fun getUserUid(): String {
+        return firebaseAuth.uid.toString()
+    }
+
+    override suspend fun getCurrentUser(): User {
+        val user = User(
+            firebaseAuth.currentUser?.displayName.toString(),
+            firebaseAuth.currentUser?.email.toString()
+        )
+        return user
+    }
 
     override suspend fun getAllEvents(): Flow<List<EventEntity>> = callbackFlow {
         val postListener = object : ValueEventListener {
@@ -63,9 +80,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     }
 
     override suspend fun createNewEvent(
-        context: Context,
-        eventEntity: EventEntity,
-        eventCreateListener: EventCreateListener
+        eventEntity: EventEntity, eventCreateListener: EventCreateListener
     ) {
         if (eventEntity.imageUri == "") {
             sendEventToDatabase(eventEntity, eventCreateListener)
@@ -85,22 +100,83 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
                     eventEntity.imageUri = downloadUri.toString()
                     sendEventToDatabase(eventEntity, eventCreateListener)
                 } else {
-                    eventCreateListener.onFailure()
+                    eventCreateListener.onFailure(task.exception?.message)
                 }
             }
         }
     }
 
     private fun sendEventToDatabase(
-        eventEntity: EventEntity,
-        eventCreateListener: EventCreateListener
+        eventEntity: EventEntity, eventCreateListener: EventCreateListener
     ) {
-        firebaseDatabaseRef.child("events").child(eventEntity.id)
-            .setValue(eventEntity).addOnSuccessListener {
+        firebaseDatabaseRef.child("events").child(eventEntity.id).setValue(eventEntity)
+            .addOnSuccessListener {
                 eventCreateListener.onSuccess()
-                Log.d("MyLog", "Success $eventEntity")
             }.addOnFailureListener {
-                eventCreateListener.onFailure()
+                eventCreateListener.onFailure(it.message)
             }
+    }
+
+    override suspend fun createNewUser(
+        user: User,
+        password: String,
+        userCreateListener: UserCreateListener
+    ) {
+        firebaseAuth.createUserWithEmailAndPassword(user.email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    firebaseAuth.currentUser!!.updateProfile(userProfileChangeRequest {
+                        displayName = user.nickname
+                    }).addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            userCreateListener.onSuccess(user)
+                        }
+                    }
+                } else {
+                    userCreateListener.onFailure(task.exception?.message)
+                }
+            }
+    }
+
+    override suspend fun signInUser(
+        email: String,
+        password: String,
+        userSignInListener: UserSignInListener
+    ) {
+        firebaseAuth.signOut()
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    userSignInListener.onSuccess()
+                } else {
+                    userSignInListener.onFailure(task.exception?.message)
+                }
+            }
+    }
+
+    override suspend fun getUserEventsList(): Flow<List<EventEntity>> = callbackFlow {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userEventEntityList = dataSnapshot.children.find {
+                    it.key == "events"
+                }?.children?.map {
+                    it.getValue<EventEntity>()!!
+                }?.filter { it.uid == firebaseAuth.uid.toString() }
+
+                if (userEventEntityList != null) {
+                    trySend(userEventEntityList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("MyLog", "Failed to read value.", error.toException())
+            }
+        }
+        firebaseDatabaseRef.addValueEventListener(postListener)
+        awaitClose { firebaseDatabaseRef.removeEventListener(postListener) }
+    }
+
+    override suspend fun userSignOut() {
+        firebaseAuth.signOut()
     }
 }

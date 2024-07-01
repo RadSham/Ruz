@@ -1,5 +1,6 @@
 package com.radsham.home
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,10 +12,11 @@ import javax.inject.Inject
 class HomeFeatureApiImpl @Inject constructor() : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navController: NavHostController
+        navController: NavHostController,
+        paddingValues: PaddingValues
     ) {
         navGraphBuilder.composable(NavScreen.HOME_SCREEN) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, paddingValues)
         }
     }
 }

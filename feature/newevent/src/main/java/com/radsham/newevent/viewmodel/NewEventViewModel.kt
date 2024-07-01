@@ -3,6 +3,7 @@ package com.radsham.newevent.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.radsham.core_api.listener.EventCreateListener
 import com.radsham.core_api.model.EventEntity
 import com.radsham.newevent.repository.NewEventRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ class NewEventViewModel @Inject constructor(
     private val newEventRepository: NewEventRepository
 ) : ViewModel() {
 
-    fun createNewEvent(eventEntity: EventEntity) = viewModelScope.launch {
-        newEventRepository.createNewEvent(appContext, eventEntity)
-    }
+    fun createNewEvent(eventEntity: EventEntity, eventCreateListener: EventCreateListener) =
+        viewModelScope.launch {
+            newEventRepository.createNewEvent(eventEntity, eventCreateListener)
+        }
 }

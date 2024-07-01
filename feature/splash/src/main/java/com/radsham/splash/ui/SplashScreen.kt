@@ -20,13 +20,10 @@ fun SplashScreen(navController: NavHostController) {
 
     LaunchedEffect(key1 = true) {
         delay(2000)
-        //popUp SplashScreen https://stackoverflow.com/a/68304038
         navController.navigate(NavScreen.HOME_SCREEN) {
             popUpTo(NavScreen.SPLASH_SCREEN) {
                 inclusive = true
             }
-            launchSingleTop = true
-            restoreState = true
         }
     }
 

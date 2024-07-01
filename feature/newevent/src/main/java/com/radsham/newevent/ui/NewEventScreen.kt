@@ -1,6 +1,8 @@
 package com.radsham.newevent.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,7 +19,7 @@ import com.radsham.newevent.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewEventScreen(navController: NavHostController) {
+fun NewEventScreen(navController: NavHostController, mainPaddingValues: PaddingValues) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -36,7 +38,7 @@ fun NewEventScreen(navController: NavHostController) {
                 }
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.padding(mainPaddingValues).fillMaxSize()
     ) { paddingValues ->
             NewEvent(paddingValues, navController)
     }

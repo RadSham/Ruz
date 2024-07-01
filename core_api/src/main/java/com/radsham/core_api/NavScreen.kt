@@ -6,4 +6,6 @@ object NavScreen{
     const val NEW_EVENT_SCREEN = "NewEventScreen"
     const val EVENT_DETAILS_SCREEN = "EventDetailsScreen"
     const val AUTH = "Authentication"
+    const val ACCOUNT = "Account"
+    const val SIGN_IN = "SignIn"
 }

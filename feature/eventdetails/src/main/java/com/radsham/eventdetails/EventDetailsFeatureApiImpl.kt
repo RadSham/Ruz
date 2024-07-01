@@ -1,5 +1,6 @@
 package com.radsham.eventdetails
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -13,13 +14,14 @@ import javax.inject.Inject
 class EventDetailsFeatureApiImpl @Inject constructor() : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navController: NavHostController
+        navController: NavHostController,
+        paddingValues: PaddingValues
     ) {
         navGraphBuilder.composable(
             NavScreen.EVENT_DETAILS_SCREEN + "/{eventId}",
             arguments = listOf(navArgument("eventId") { type = NavType.StringType})
         ) { backStackEntry ->
-            EventDetailsScreen(navController = navController, backStackEntry.arguments?.getString("eventId"))
+            EventDetailsScreen(navController, paddingValues, backStackEntry.arguments?.getString("eventId"))
         }
     }
 }

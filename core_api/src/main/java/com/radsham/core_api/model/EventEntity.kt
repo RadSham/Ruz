@@ -8,5 +8,6 @@ data class EventEntity(
     val category: String = "",
     val description: String = "",
     val contacts: String = "",
-    val participants: String = ""
+    val participants: String = "",
+    var uid: String = ""
 )

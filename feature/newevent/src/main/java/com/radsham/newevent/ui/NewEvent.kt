@@ -1,6 +1,7 @@
 package com.radsham.newevent.ui
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,6 +39,8 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.radsham.core_api.NavScreen
+import com.radsham.core_api.listener.EventCreateListener
 import com.radsham.core_api.model.EventEntity
 import com.radsham.newevent.R
 import com.radsham.newevent.viewmodel.NewEventViewModel
@@ -92,7 +95,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     value = nameText,
                     onValueChange = {
                         nameText = it
-                        if (nameText != "") isErrorName = false
+                        isErrorName = false
                     },
                     label = { Text(stringResource(R.string.name)) },
                     trailingIcon = {
@@ -119,7 +122,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     value = locationText,
                     onValueChange = {
                         locationText = it
-                        if (locationText != "") isErrorLocation = false
+                        isErrorLocation = false
                     },
                     label = { Text(stringResource(R.string.location)) },
                     trailingIcon = {
@@ -146,7 +149,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     value = categoryText,
                     onValueChange = {
                         categoryText = it
-                        if (categoryText != "") isErrorCategory = false
+                        isErrorCategory = false
                     },
                     label = { Text(stringResource(R.string.category)) },
                     trailingIcon = {
@@ -173,7 +176,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     value = descriptionText,
                     onValueChange = {
                         descriptionText = it
-                        if (descriptionText != "") isErrorDescription = false
+                        isErrorDescription = false
                     },
                     label = { Text(stringResource(R.string.description)) },
                     trailingIcon = {
@@ -200,7 +203,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     value = contactsText,
                     onValueChange = {
                         contactsText = it
-                        if (contactsText != "") isErrorContacts = false
+                        isErrorContacts = false
                     },
                     label = { Text(stringResource(R.string.contacts)) },
                     trailingIcon = {
@@ -222,30 +225,29 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                 )
             }
             fun checkDetails(): Boolean {
-                var bool = true
+                var isAllFilled = true
                 if (nameText == "") {
                     isErrorName = true
-                    bool = false
+                    isAllFilled = false
                 }
                 if (locationText == "") {
                     isErrorLocation = true
-                    bool = false
+                    isAllFilled = false
                 }
                 if (categoryText == "") {
                     isErrorCategory = true
-                    bool = false
+                    isAllFilled = false
                 }
                 if (descriptionText == "") {
                     isErrorDescription = true
-                    bool = false
+                    isAllFilled = false
                 }
                 if (contactsText == "") {
                     isErrorContacts = true
-                    bool = false
+                    isAllFilled = false
                 }
-                return bool
+                return isAllFilled
             }
-            // TODO: go to the main screen after successfully adding an event
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
                 if (checkDetails()) {
                     viewModel.createNewEvent(
@@ -257,7 +259,30 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                             category = categoryText,
                             description = descriptionText,
                             contacts = contactsText
-                        )
+                        ), object : EventCreateListener {
+                            override fun onSuccess() {
+                                Toast.makeText(
+                                    viewModel.appContext,
+                                    "Event successfully created",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navController.navigate(NavScreen.ACCOUNT) {
+                                    popUpTo(NavScreen.NEW_EVENT_SCREEN) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+
+                            override fun onFailure(message: String?) {
+                                Toast.makeText(
+                                    viewModel.appContext,
+                                    message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                     )
                 }
             }) {

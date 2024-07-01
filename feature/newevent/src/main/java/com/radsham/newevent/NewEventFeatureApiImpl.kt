@@ -1,5 +1,6 @@
 package com.radsham.newevent
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,10 +12,11 @@ import javax.inject.Inject
 class NewEventFeatureApiImpl @Inject constructor() : FeatureApi {
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navController: NavHostController
+        navController: NavHostController,
+        paddingValues: PaddingValues
     ) {
         navGraphBuilder.composable(NavScreen.NEW_EVENT_SCREEN) {
-            NewEventScreen(navController = navController)
+            NewEventScreen(navController,paddingValues)
         }
     }
 }
