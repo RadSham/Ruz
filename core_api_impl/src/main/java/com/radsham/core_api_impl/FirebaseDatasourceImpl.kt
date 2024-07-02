@@ -37,7 +37,6 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
             firebaseAuth.currentUser?.displayName.toString(),
             firebaseAuth.currentUser?.email.toString()
         )
-        Log.d("MyLog", firebaseAuth.currentUser?.uid.toString())
         return user
     }
 

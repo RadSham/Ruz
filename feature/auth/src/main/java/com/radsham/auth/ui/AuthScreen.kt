@@ -3,11 +3,7 @@ package com.radsham.auth.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -33,7 +29,7 @@ fun AuthScreen(
                 title = {
                     Text(text = stringResource(id = R.string.sign_up))
                 },
-                navigationIcon = {
+                /*navigationIcon = {
                     IconButton(onClick = {
                         navController.popBackStack()
                     }) {
@@ -42,7 +38,7 @@ fun AuthScreen(
                             contentDescription = "ArrowBack"
                         )
                     }
-                }
+                }*/
             )
         },
         modifier = Modifier

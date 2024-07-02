@@ -22,6 +22,10 @@ class CheckUserViewModel @Inject constructor(
     val currentUserState: State<User>
         get() = _currentUserState
 
+    init {
+        getCurrentUser()
+    }
+
     fun getCurrentUser() = viewModelScope.launch {
         _currentUserState.value = checkUserRepository.getCurrentUser()
     }

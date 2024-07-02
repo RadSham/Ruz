@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.radsham.account.viewmodel.AccountViewModel
+import com.radsham.core_api.NavScreen
 import com.radsham.core_api.Result
 import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 
@@ -56,7 +57,13 @@ fun AccountScreen(
             .padding(mainPaddingValues)
             .fillMaxSize(),
         bottomBar = {
-            TextButton(onClick = { viewModel.userSignOut() }) {
+            TextButton(onClick = {
+                viewModel.userSignOut()
+                navController.navigate(NavScreen.HOME_SCREEN) {
+                    popUpTo(NavScreen.HOME_SCREEN)
+                    launchSingleTop = true
+                }
+            }) {
                 Text(text = "Sign out")
             }
         }

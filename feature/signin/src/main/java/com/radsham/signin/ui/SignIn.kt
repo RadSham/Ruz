@@ -120,11 +120,8 @@ fun SignIn(paddingValues: PaddingValues, navController: NavHostController) {
                                 Toast.LENGTH_SHORT
                             ).show()
                             navController.navigate(NavScreen.ACCOUNT) {
-                                popUpTo(NavScreen.SIGN_IN) {
-                                    inclusive = true
-                                }
+                                popUpTo(NavScreen.HOME_SCREEN)
                                 launchSingleTop = true
-                                restoreState = true
                             }
                         }
 

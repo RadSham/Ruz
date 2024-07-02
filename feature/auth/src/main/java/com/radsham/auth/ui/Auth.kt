@@ -154,12 +154,11 @@ fun Auth(paddingValues: PaddingValues, navController: NavHostController) {
                                 R.string.user_created,
                                 Toast.LENGTH_SHORT
                             ).show()
-                            navController.navigate(NavScreen.HOME_SCREEN) {
+                            navController.navigate(NavScreen.ACCOUNT) {
                                 popUpTo(NavScreen.AUTH) {
                                     inclusive = true
                                 }
                                 launchSingleTop = true
-                                restoreState = true
                             }
                         }
 

@@ -1,6 +1,5 @@
 package com.radsham.main
 
-import android.util.Log
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.radsham.main.model.BottomNavigationItem
 
@@ -24,7 +22,11 @@ fun BottomNavigationBar(navController: NavController) {
         val currentDestination = navBackStackEntry?.destination
         BottomNavigationItem().bottomNavigationItems().forEachIndexed { index, navigationItem ->
             NavigationBarItem(
-                selected = currentDestination?.hierarchy?.any { it.route == navigationItem.route } == true,
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == navigationItem.route || it.route?.startsWith(
+                        navigationItem.route
+                    ) ?: false
+                } == true,
                 /*label = {
                     Text(navigationItem.label)
                 },
@@ -38,13 +40,12 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = {
                     navigationSelectedItem = index
                     navController.navigate(navigationItem.route) {
-                        launchSingleTop = true
-                        restoreState = true
                         popUpTo(BottomNavigationBarScreens.Home.route) {
                             saveState = true
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    Log.d("MyLog", navController.graph.findStartDestination().route.toString())
                 }
             )
         }
