@@ -11,11 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.signin.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(navController: NavHostController, mainPaddingValues: PaddingValues) {
+fun SignInScreen(
+    navController: NavHostController,
+    mainPaddingValues: PaddingValues,
+    showBottomNavigationBarListener: ShowBottomNavigationBarListener
+) {
+    showBottomNavigationBarListener.showBar(true)
     Scaffold(
         topBar = {
             TopAppBar(

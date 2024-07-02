@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.radsham.core_api.Result
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.eventdetails.R
 import com.radsham.eventdetails.ui.EventDetails
 import com.radsham.eventdetails.ui.LoadingState
@@ -32,7 +33,9 @@ fun EventDetailsScreen(
     navController: NavHostController,
     mainPaddingValues: PaddingValues,
     eventId: String?,
+    showBottomNavigationBarListener: ShowBottomNavigationBarListener,
 ) {
+    showBottomNavigationBarListener.showBar(false)
     val viewModel: EventDetailsViewModel = hiltViewModel()
 
     val viewState by viewModel.viewState.collectAsState()

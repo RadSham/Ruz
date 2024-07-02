@@ -15,11 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.newevent.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewEventScreen(navController: NavHostController, mainPaddingValues: PaddingValues) {
+fun NewEventScreen(
+    navController: NavHostController,
+    mainPaddingValues: PaddingValues,
+    showBottomNavigationBarListener: ShowBottomNavigationBarListener
+) {
+    showBottomNavigationBarListener.showBar(false)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -38,8 +44,10 @@ fun NewEventScreen(navController: NavHostController, mainPaddingValues: PaddingV
                 }
             )
         },
-        modifier = Modifier.padding(mainPaddingValues).fillMaxSize()
+        modifier = Modifier
+            .padding(mainPaddingValues)
+            .fillMaxSize()
     ) { paddingValues ->
-            NewEvent(paddingValues, navController)
+        NewEvent(paddingValues, navController)
     }
 }

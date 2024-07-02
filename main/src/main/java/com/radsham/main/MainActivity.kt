@@ -7,9 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.radsham.core_api.FeatureApi
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.main.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -29,11 +34,16 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     val navController = rememberNavController()
+                    var bottomBarShowBool by remember { mutableStateOf(false) }
+                    val showBottomNavigationBarListener = object : ShowBottomNavigationBarListener {
+                        override fun showBar(showBarBoolean: Boolean) {
+                            bottomBarShowBool = showBarBoolean
+                        }
+                    }
                     Scaffold(
-                        bottomBar = { BottomNavigationBar(navController) }
+                        bottomBar = { if (bottomBarShowBool) BottomNavigationBar(navController) }
                     ) { paddingValues ->
-                        println(paddingValues)
-                        SetupNavGraph(featureProvider, navController, paddingValues)
+                        SetupNavGraph(featureProvider, navController, paddingValues, showBottomNavigationBarListener)
                     }
                 }
             }

@@ -13,17 +13,24 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.radsham.core_api.Result
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.home.viewmodel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController, mainPaddingValues: PaddingValues) {
+fun HomeScreen(
+    navController: NavHostController,
+    mainPaddingValues: PaddingValues,
+    showBottomNavigationBarListener: ShowBottomNavigationBarListener
+) {
+    showBottomNavigationBarListener.showBar(true)
     val viewModel: HomeViewModel = hiltViewModel()
     val viewState by viewModel.viewState.collectAsState()
     LaunchedEffect(key1 = "viewModel1", block = { viewModel.getCurrentUser() })
     LaunchedEffect(key1 = "viewModel2", block = { viewModel.fetchAllEvents() })
 
-    Scaffold(modifier = Modifier.padding(mainPaddingValues)
+    Scaffold(
+        modifier = Modifier.padding(mainPaddingValues)
         /*topBar = {
             TopAppBar(title = { Text(text = "Home")}, navigationIcon = {
                 IconButton(onClick = {

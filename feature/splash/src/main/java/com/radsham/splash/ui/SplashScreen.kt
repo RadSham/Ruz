@@ -12,12 +12,13 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.radsham.core_api.NavScreen
+import com.radsham.core_api.listener.ShowBottomNavigationBarListener
 import com.radsham.splash.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
-
+fun SplashScreen(navController: NavHostController, showBottomNavigationBarListener: ShowBottomNavigationBarListener) {
+    showBottomNavigationBarListener.showBar(false)
     LaunchedEffect(key1 = true) {
         delay(2000)
         navController.navigate(NavScreen.HOME_SCREEN) {
