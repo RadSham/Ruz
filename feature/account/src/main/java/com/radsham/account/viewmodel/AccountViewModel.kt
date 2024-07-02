@@ -24,7 +24,7 @@ class AccountViewModel @Inject constructor(
     private val _viewState = MutableStateFlow<Result<List<EventEntity>>>(Result.Loading("Loading"))
     val viewState = _viewState.asStateFlow()
 
-    private val _currentUserState = mutableStateOf(User("", ""))
+    private val _currentUserState = mutableStateOf(User("", "", ""))
     val currentUserState: State<User>
         get() = _currentUserState
 
@@ -32,11 +32,14 @@ class AccountViewModel @Inject constructor(
         _currentUserState.value = accountRepository.getCurrentUser()
     }
 
-
     fun getUserEventsList() = viewModelScope.launch {
         accountRepository.getUserEventsList().catch { _viewState.value = Result.Error(it) }
             .collect {
                 _viewState.emit(Result.Success(it))
             }
+    }
+
+    fun userSignOut()= viewModelScope.launch {
+        accountRepository.userSignOut()
     }
 }

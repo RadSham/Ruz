@@ -146,7 +146,7 @@ fun Auth(paddingValues: PaddingValues, navController: NavHostController) {
             }
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
                 if (checkDetails()) {
-                    viewModel.createNewUser(User(nicknameText, emailText), passwordText, object :
+                    viewModel.createNewUser(User("", nicknameText, emailText), passwordText, object :
                         UserCreateListener {
                         override fun onSuccess(user: User) {
                             Toast.makeText(

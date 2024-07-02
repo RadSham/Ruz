@@ -9,9 +9,6 @@ class HomeRepository @Inject constructor(
     private val firebaseDatasource: FirebaseDatasource
 ) {
 
-    suspend fun userSignOut(){
-        firebaseDatasource.userSignOut()
-    }
     suspend fun getCurrentUser(): User {
         return firebaseDatasource.getCurrentUser()
     }

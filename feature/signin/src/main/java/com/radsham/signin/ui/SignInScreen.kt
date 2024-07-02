@@ -21,7 +21,7 @@ fun SignInScreen(
     mainPaddingValues: PaddingValues,
     showBottomNavigationBarListener: ShowBottomNavigationBarListener
 ) {
-    showBottomNavigationBarListener.showBar(true)
+    showBottomNavigationBarListener.showBar(false)
     Scaffold(
         topBar = {
             TopAppBar(

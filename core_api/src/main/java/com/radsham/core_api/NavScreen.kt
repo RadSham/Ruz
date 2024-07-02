@@ -8,4 +8,7 @@ object NavScreen{
     const val AUTH = "Authentication"
     const val ACCOUNT = "Account"
     const val SIGN_IN = "SignIn"
+    const val SEARCH = "Search"
+    const val IAMIN = "IamIn"
+    const val CHECKUSER = "CheckUser"
 }

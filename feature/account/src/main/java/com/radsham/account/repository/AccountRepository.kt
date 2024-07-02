@@ -20,4 +20,8 @@ class AccountRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun userSignOut(){
+        firebaseDatasource.userSignOut()
+    }
 }

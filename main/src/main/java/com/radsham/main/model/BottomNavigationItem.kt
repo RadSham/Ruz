@@ -2,8 +2,9 @@ package com.radsham.main.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.radsham.main.BottomNavigationBarScreens
 
@@ -20,15 +21,20 @@ data class BottomNavigationItem(
                 route = BottomNavigationBarScreens.Home.route
             ),
             BottomNavigationItem(
-                label = "Account",
-                icon = Icons.Filled.AccountCircle,
-                route = BottomNavigationBarScreens.Account.route
+                label = "Search",
+                icon = Icons.Filled.Search,
+                route = BottomNavigationBarScreens.Search.route
             ),
             BottomNavigationItem(
-                label = "SignIn",
-                icon = Icons.Filled.Add,
-                route = BottomNavigationBarScreens.SignIn.route
+                label = "IamIn",
+                icon = Icons.Filled.FavoriteBorder,
+                route = BottomNavigationBarScreens.IamIn.route
             ),
+            BottomNavigationItem(
+                label = "CheckUser",
+                icon = Icons.Filled.AccountCircle,
+                route = BottomNavigationBarScreens.CheckUser.route
+            )
         )
     }
 }

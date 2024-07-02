@@ -16,6 +16,6 @@ abstract class AuthFeatureApiModule {
 
     @Binds
     @IntoMap
-    @StringKey(NavScreen.AUTH   )
+    @StringKey(NavScreen.AUTH)
     abstract fun bindModuleApi(impl: AuthFeatureApiImpl): FeatureApi
 }

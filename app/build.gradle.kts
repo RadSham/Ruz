@@ -93,6 +93,7 @@ dependencies {
     implementation(project(":feature:auth"))
     implementation(project(":feature:account"))
     implementation(project(":feature:signin"))
+    implementation(project(":feature:checkuser"))
     implementation(project(":core_api"))
     implementation(project(":core_api_impl"))
 }

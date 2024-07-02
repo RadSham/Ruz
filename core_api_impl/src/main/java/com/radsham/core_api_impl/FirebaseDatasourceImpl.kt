@@ -33,9 +33,11 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
 
     override suspend fun getCurrentUser(): User {
         val user = User(
+            firebaseAuth.currentUser?.uid.toString(),
             firebaseAuth.currentUser?.displayName.toString(),
             firebaseAuth.currentUser?.email.toString()
         )
+        Log.d("MyLog", firebaseAuth.currentUser?.uid.toString())
         return user
     }
 

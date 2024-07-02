@@ -25,16 +25,12 @@ class HomeViewModel @Inject constructor(
     private val _viewState = MutableStateFlow<Result<List<EventEntity>>>(Result.Loading("Loading"))
     val viewState = _viewState.asStateFlow()
 
-    private val _currentUserState = mutableStateOf(User("", ""))
+    private val _currentUserState = mutableStateOf(User("", "",""))
     val currentUserState: State<User>
         get() = _currentUserState
 
     fun getCurrentUser() = viewModelScope.launch {
         _currentUserState.value = homeRepository.getCurrentUser()
-    }
-
-    fun userSignOut()= viewModelScope.launch {
-        homeRepository.userSignOut()
     }
 
     fun fetchAllEvents() = viewModelScope.launch {
