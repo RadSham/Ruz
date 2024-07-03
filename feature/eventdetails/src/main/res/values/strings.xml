@@ -7,4 +7,6 @@
     <string name="description">Description</string>
     <string name="contacts">Contacts</string>
     <string name="event_details">Event details</string>
+    <string name="i_am_in">I\'m in</string>
+    <string name="i_am_out">I\'m out</string>
 </resources>

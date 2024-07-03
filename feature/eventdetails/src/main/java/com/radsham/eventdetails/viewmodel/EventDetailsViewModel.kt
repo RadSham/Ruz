@@ -38,6 +38,9 @@ class EventDetailsViewModel @Inject constructor(
         eventDetailsRepository.addParticipant(eventEntityId, participantUid)
     }
 
+    fun excludeParticipant(eventEntityId: String, participantUid: String) = viewModelScope.launch {
+        eventDetailsRepository.excludeParticipant(eventEntityId, participantUid)
+    }
 
     fun fetchEvent(eventId: String) = viewModelScope.launch {
         eventDetailsRepository.listenForEvent(eventId).catch { _viewState.value = Result.Error(it) }

@@ -71,7 +71,7 @@ fun EventDetailsScreen(
         when (val state = viewState) {
             is Result.Loading -> LoadingState(paddingValues)
             is Result.Success -> {
-                EventDetails(paddingValues, state.data, viewModel.currentUserState.value, object :
+                EventDetails(paddingValues, state.data, viewModel.currentUserState.value.uid, object :
                     UserAuthorizedListener {
                     override fun onIamIn() {
                         viewModel.addParticipant(state.data.id, viewModel.currentUserState.value.uid)
@@ -83,11 +83,12 @@ fun EventDetailsScreen(
                     }
 
                     override fun onIamOut() {
-                        Toast.makeText(
+                        viewModel.excludeParticipant(state.data.id, viewModel.currentUserState.value.uid)
+                        /*Toast.makeText(
                             viewModel.appContext,
                             "You have been excluded from the list of participants in the ${state.data} event",
                             Toast.LENGTH_SHORT
-                        ).show()
+                        ).show()*/
                     }
 
                     override fun onFailure() {

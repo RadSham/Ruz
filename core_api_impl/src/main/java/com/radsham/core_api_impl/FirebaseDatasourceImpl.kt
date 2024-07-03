@@ -180,14 +180,33 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun userSignOut() {
         firebaseAuth.signOut()
     }
-
+    //TODO: add listener
     override suspend fun addParticipant(eventEntityId: String, participantUid: String) {
         firebaseDatabaseRef.child("events").child(eventEntityId).child("participants")
             .child(participantUid).setValue(participantUid)
-            /*.addOnSuccessListener {
-                eventCreateListener.onSuccess()
+            .addOnSuccessListener {
+                Log.d("MyLog", "addParticipant")
             }.addOnFailureListener {
-                eventCreateListener.onFailure(it.message)
-            }*/
+                Log.d("MyLog", "addParticipant OnFailure $it")
+            }
+    }
+    //TODO: add listener
+    override suspend fun excludeParticipant(eventEntityId: String, participantUid: String) {
+        firebaseDatabaseRef.child("events").child(eventEntityId).child("participants")
+            .child(participantUid).removeValue()
+            .addOnSuccessListener {
+                Log.d("MyLog", "excludeParticipant")
+            }.addOnFailureListener {
+                Log.d("MyLog", "excludeParticipant OnFailure $it")
+            }
+    }
+    //TODO: add listener
+    override suspend fun deleteEvent(deleteEventId: String) {
+        firebaseDatabaseRef.child("events").child(deleteEventId).removeValue()
+            .addOnSuccessListener {
+                Log.d("MyLog", "deleteEvent")
+            }.addOnFailureListener {
+                Log.d("MyLog", "deleteEvent OnFailure $it")
+            }
     }
 }

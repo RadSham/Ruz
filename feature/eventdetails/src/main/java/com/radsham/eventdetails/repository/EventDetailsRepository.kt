@@ -24,4 +24,8 @@ class EventDetailsRepository @Inject constructor(
     suspend fun addParticipant(eventEntityId: String, participantUid: String) {
         firebaseDatasource.addParticipant(eventEntityId, participantUid)
     }
+
+    suspend fun excludeParticipant(eventEntityId: String, participantUid: String) {
+        firebaseDatasource.excludeParticipant(eventEntityId, participantUid)
+    }
 }

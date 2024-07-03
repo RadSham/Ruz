@@ -18,5 +18,7 @@ interface FirebaseDatasource {
     suspend fun getUserEventsList(): Flow<List<EventEntity>>
     suspend fun userSignOut()
     suspend fun addParticipant(eventEntityId: String, participantUid: String)
+    suspend fun excludeParticipant(eventEntityId: String, participantUid: String)
+    suspend fun deleteEvent(deleteEventId: String)
 }
 

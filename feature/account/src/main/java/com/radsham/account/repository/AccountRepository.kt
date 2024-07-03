@@ -24,4 +24,8 @@ class AccountRepository @Inject constructor(
     suspend fun userSignOut(){
         firebaseDatasource.userSignOut()
     }
+
+    suspend fun deleteEvent(deleteEventId: String) {
+        firebaseDatasource.deleteEvent(deleteEventId)
+    }
 }

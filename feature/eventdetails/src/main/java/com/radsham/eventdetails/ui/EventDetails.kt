@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.radsham.core_api.listener.UserAuthorizedListener
 import com.radsham.core_api.model.EventEntity
-import com.radsham.core_api.model.User
 import com.radsham.eventdetails.R
 
 
@@ -41,11 +39,10 @@ import com.radsham.eventdetails.R
 fun EventDetails(
     paddingValues: PaddingValues,
     eventEntity: EventEntity,
-    currentUser: User,
+    currentUserUid: String,
     userAuthorizedListener: UserAuthorizedListener,
 ) {
     var participantCount by remember { mutableIntStateOf(0) }
-    var participantButtonBoolean by remember { mutableStateOf(false) }
     participantCount = eventEntity.participants.size
     Box(Modifier.padding(paddingValues)) {
         Card(
@@ -119,29 +116,19 @@ fun EventDetails(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Participants: $participantCount")
-                    if (!participantButtonBoolean) {
+                    if (!checkParticipant(eventEntity, currentUserUid)) {
                         Button(onClick = {
-                            if (isAuthUser(currentUser)) {
-                                /*participantCount++
-                                participantButtonBoolean = !participantButtonBoolean*/
-                                userAuthorizedListener.onIamIn()
-                            } else {
-                                userAuthorizedListener.onFailure()
-                            }
+                            if (isAuthUser(currentUserUid)) userAuthorizedListener.onIamIn()
+                            else userAuthorizedListener.onFailure()
                         }) {
-                            Text("I'm in")
+                            Text(stringResource(id = R.string.i_am_in))
                         }
                     } else {
                         Button(onClick = {
-                            if (isAuthUser(currentUser)) {
-                                participantCount--
-                                participantButtonBoolean = !participantButtonBoolean
-                                userAuthorizedListener.onIamOut()
-                            } else {
-                                userAuthorizedListener.onFailure()
-                            }
+                            if (isAuthUser(currentUserUid)) userAuthorizedListener.onIamOut()
+                            else userAuthorizedListener.onFailure()
                         }) {
-                            Text("I'm out")
+                            Text(stringResource(id = R.string.i_am_out))
                         }
                     }
                 }
@@ -150,8 +137,12 @@ fun EventDetails(
     }
 }
 
-fun isAuthUser(currentUser: User): Boolean {
-    return currentUser.uid != "null"
+fun checkParticipant(eventEntity: EventEntity, currentUserUid: String): Boolean {
+    return eventEntity.participants.containsKey(currentUserUid)
+}
+
+fun isAuthUser(currentUserUid: String): Boolean {
+    return currentUserUid != "null"
 }
 
 

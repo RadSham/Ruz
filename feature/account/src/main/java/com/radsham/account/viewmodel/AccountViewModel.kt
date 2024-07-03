@@ -39,6 +39,10 @@ class AccountViewModel @Inject constructor(
             }
     }
 
+    fun deleteEvent(deleteEventId: String) = viewModelScope.launch {
+        accountRepository.deleteEvent(deleteEventId)
+    }
+
     fun userSignOut()= viewModelScope.launch {
         accountRepository.userSignOut()
     }
