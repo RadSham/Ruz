@@ -81,7 +81,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     }
 
     override suspend fun createNewEvent(
-        eventEntity: EventEntity, eventCreateListener: EventCreateListener
+        eventEntity: EventEntity, eventCreateListener: EventCreateListener,
     ) {
         if (eventEntity.imageUri == "") {
             sendEventToDatabase(eventEntity, eventCreateListener)
@@ -108,7 +108,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     }
 
     private fun sendEventToDatabase(
-        eventEntity: EventEntity, eventCreateListener: EventCreateListener
+        eventEntity: EventEntity, eventCreateListener: EventCreateListener,
     ) {
         firebaseDatabaseRef.child("events").child(eventEntity.id).setValue(eventEntity)
             .addOnSuccessListener {
@@ -121,7 +121,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun createNewUser(
         user: User,
         password: String,
-        userCreateListener: UserCreateListener
+        userCreateListener: UserCreateListener,
     ) {
         firebaseAuth.createUserWithEmailAndPassword(user.email, password)
             .addOnCompleteListener { task ->
@@ -142,7 +142,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun signInUser(
         email: String,
         password: String,
-        userSignInListener: UserSignInListener
+        userSignInListener: UserSignInListener,
     ) {
         firebaseAuth.signOut()
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -179,5 +179,15 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
 
     override suspend fun userSignOut() {
         firebaseAuth.signOut()
+    }
+
+    override suspend fun addParticipant(eventEntityId: String, participantUid: String) {
+        firebaseDatabaseRef.child("events").child(eventEntityId).child("participants")
+            .child(participantUid).setValue(participantUid)
+            /*.addOnSuccessListener {
+                eventCreateListener.onSuccess()
+            }.addOnFailureListener {
+                eventCreateListener.onFailure(it.message)
+            }*/
     }
 }

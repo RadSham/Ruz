@@ -18,7 +18,7 @@ class CheckUserViewModel @Inject constructor(
     private val checkUserRepository: CheckUserRepository
 ) : ViewModel() {
 
-    private val _currentUserState = mutableStateOf(User("", "", ""))
+    private val _currentUserState = mutableStateOf(User("null", "", ""))
     val currentUserState: State<User>
         get() = _currentUserState
 

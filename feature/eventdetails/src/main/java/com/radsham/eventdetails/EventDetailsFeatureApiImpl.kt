@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.radsham.core_api.FeatureApi
 import com.radsham.core_api.NavScreen
 import com.radsham.core_api.listener.ShowBottomNavigationBarListener
-import com.radsham.home.ui.EventDetailsScreen
+import com.radsham.eventdetails.ui.EventDetailsScreen
 import javax.inject.Inject
 
 class EventDetailsFeatureApiImpl @Inject constructor() : FeatureApi {

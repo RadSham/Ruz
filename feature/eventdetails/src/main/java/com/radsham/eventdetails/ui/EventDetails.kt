@@ -31,15 +31,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.radsham.core_api.listener.UserAuthorizedListener
 import com.radsham.core_api.model.EventEntity
+import com.radsham.core_api.model.User
 import com.radsham.eventdetails.R
 
 
 @Composable
-fun EventDetails(paddingValues: PaddingValues, eventEntity: EventEntity) {
+fun EventDetails(
+    paddingValues: PaddingValues,
+    eventEntity: EventEntity,
+    currentUser: User,
+    userAuthorizedListener: UserAuthorizedListener,
+) {
     var participantCount by remember { mutableIntStateOf(0) }
     var participantButtonBoolean by remember { mutableStateOf(false) }
-    participantCount = eventEntity.participants.toInt()
+    participantCount = eventEntity.participants.size
     Box(Modifier.padding(paddingValues)) {
         Card(
             modifier = Modifier
@@ -71,31 +78,68 @@ fun EventDetails(paddingValues: PaddingValues, eventEntity: EventEntity) {
                         model = eventEntity.imageUri,
                         contentDescription = stringResource(id = R.string.event_image)
                     )
-                Row {
-                    Text(text = eventEntity.name)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.name))
                     Text(text = eventEntity.name)
                 }
-                Text(text = eventEntity.location)
-                Text(text = eventEntity.category)
-                Text(text = eventEntity.description)
-                Text(text = eventEntity.contacts)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.location))
+                    Text(text = eventEntity.location)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.category))
+                    Text(text = eventEntity.category)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.description))
+                    Text(text = eventEntity.description)
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = stringResource(R.string.contacts))
+                    Text(text = eventEntity.contacts)
+                }
                 Row(
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Participants: $participantCount")
-                    if (participantButtonBoolean == false) {
+                    if (!participantButtonBoolean) {
                         Button(onClick = {
-                            participantCount++
-                            participantButtonBoolean = !participantButtonBoolean
+                            if (isAuthUser(currentUser)) {
+                                /*participantCount++
+                                participantButtonBoolean = !participantButtonBoolean*/
+                                userAuthorizedListener.onIamIn()
+                            } else {
+                                userAuthorizedListener.onFailure()
+                            }
                         }) {
                             Text("I'm in")
                         }
                     } else {
                         Button(onClick = {
-                            participantCount--
-                            participantButtonBoolean = !participantButtonBoolean
+                            if (isAuthUser(currentUser)) {
+                                participantCount--
+                                participantButtonBoolean = !participantButtonBoolean
+                                userAuthorizedListener.onIamOut()
+                            } else {
+                                userAuthorizedListener.onFailure()
+                            }
                         }) {
                             Text("I'm out")
                         }
@@ -105,3 +149,9 @@ fun EventDetails(paddingValues: PaddingValues, eventEntity: EventEntity) {
         }
     }
 }
+
+fun isAuthUser(currentUser: User): Boolean {
+    return currentUser.uid != "null"
+}
+
+

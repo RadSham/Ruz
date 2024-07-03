@@ -17,5 +17,6 @@ interface FirebaseDatasource {
     suspend fun signInUser(email: String, password: String, userSignInListener: UserSignInListener)
     suspend fun getUserEventsList(): Flow<List<EventEntity>>
     suspend fun userSignOut()
+    suspend fun addParticipant(eventEntityId: String, participantUid: String)
 }
 

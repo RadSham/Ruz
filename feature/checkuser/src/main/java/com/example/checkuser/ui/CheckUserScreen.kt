@@ -19,7 +19,7 @@ fun CheckUserScreen(
     showBottomNavigationBarListener.showBar(true)
     val viewModel: CheckUserViewModel = hiltViewModel()
 
-    LaunchedEffect(key1 = "viewModel1", block = { viewModel.getCurrentUser() })
+    LaunchedEffect(key1 = "viewModel", block = { viewModel.getCurrentUser() })
 
     CheckUser(mainPaddingValues, navController, viewModel.currentUserState.value)
 }

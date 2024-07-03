@@ -1,4 +1,4 @@
-package com.radsham.home.ui
+package com.radsham.eventdetails.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,9 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.radsham.core_api.Result
 import com.radsham.core_api.listener.ShowBottomNavigationBarListener
+import com.radsham.core_api.listener.UserAuthorizedListener
 import com.radsham.eventdetails.R
-import com.radsham.eventdetails.ui.EventDetails
-import com.radsham.eventdetails.ui.LoadingState
 import com.radsham.eventdetails.viewmodel.EventDetailsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +38,9 @@ fun EventDetailsScreen(
     val viewModel: EventDetailsViewModel = hiltViewModel()
 
     val viewState by viewModel.viewState.collectAsState()
-
+    LaunchedEffect(key1 = "viewModel1", block = {
+        viewModel.getCurrentUser()
+    })
     LaunchedEffect(key1 = viewModel, block = {
         if (eventId != null) {
             viewModel.fetchEvent(eventId)
@@ -70,7 +71,34 @@ fun EventDetailsScreen(
         when (val state = viewState) {
             is Result.Loading -> LoadingState(paddingValues)
             is Result.Success -> {
-                EventDetails(paddingValues, state.data)
+                EventDetails(paddingValues, state.data, viewModel.currentUserState.value, object :
+                    UserAuthorizedListener {
+                    override fun onIamIn() {
+                        viewModel.addParticipant(state.data.id, viewModel.currentUserState.value.uid)
+                        /*Toast.makeText(
+                            viewModel.appContext,
+                            "You have been added to the list of participants in the ${state.data} event",
+                            Toast.LENGTH_SHORT
+                        ).show()*/
+                    }
+
+                    override fun onIamOut() {
+                        Toast.makeText(
+                            viewModel.appContext,
+                            "You have been excluded from the list of participants in the ${state.data} event",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onFailure() {
+                        Toast.makeText(
+                            viewModel.appContext,
+                            "Please sign in to participate in the event",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                })
             }
 
             is Result.Error -> Toast.makeText(
