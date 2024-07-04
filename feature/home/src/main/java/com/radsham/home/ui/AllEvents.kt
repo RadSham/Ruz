@@ -16,6 +16,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -33,10 +34,13 @@ import com.radsham.home.R
 fun AllEvents(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    eventsList: List<EventEntity>
+    eventsList: List<EventEntity>,
+    query: MutableState<String>
 ) {
+    val filteredList =
+        eventsList.filter { it.name.contains(query.value) || it.category.contains(query.value) }
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
-        items(eventsList) {
+        items(filteredList) {
             EventCard(navController, it)
         }
     }

@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -28,21 +30,10 @@ fun HomeScreen(
     val viewState by viewModel.viewState.collectAsState()
     LaunchedEffect(key1 = "viewModel2", block = { viewModel.fetchAllEvents() })
 
+    val query = remember { mutableStateOf("") }
     Scaffold(
-        modifier = Modifier.padding(mainPaddingValues)
-        /*topBar = {
-            TopAppBar(title = { Text(text = "Home")}, navigationIcon = {
-                IconButton(onClick = {
-                    scope.launch {
-                        drawerState.open()
-                    }
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Menu, contentDescription = "Menu"
-                    )
-                }
-            })
-        }*/
+        modifier = Modifier.padding(mainPaddingValues),
+        topBar = { SearchView(query = query) }
     ) { paddingValues ->
         when (val state = viewState) {
             is Result.Loading -> LoadingState(paddingValues)
@@ -50,7 +41,8 @@ fun HomeScreen(
                 AllEvents(
                     paddingValues = paddingValues,
                     navController = navController,
-                    eventsList = state.data
+                    eventsList = state.data,
+                    query = query
                 )
             }
 
