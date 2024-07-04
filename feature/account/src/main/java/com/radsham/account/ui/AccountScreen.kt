@@ -78,7 +78,9 @@ fun AccountScreen(
                     .clickable {
                         viewModel.userSignOut()
                         navController.navigate(NavScreen.HOME_SCREEN) {
-                            popUpTo(NavScreen.HOME_SCREEN)
+                            popUpTo(NavScreen.HOME_SCREEN){
+                                saveState = false
+                            }
                             launchSingleTop = true
                         }
                     },

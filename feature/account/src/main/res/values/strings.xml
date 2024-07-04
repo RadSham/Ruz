@@ -3,7 +3,7 @@
     <string name="event_image">Event image</string>
     <string name="create_new_event">Create new event</string>
     <string name="empty_user_eventlist">You did not create any event</string>
-    <string name="my_events">My events</string>
+    <string name="created_events">Created events</string>
     <string name="sign_out">Sign out</string>
     <string name="delete_event">Delete event</string>
 </resources>

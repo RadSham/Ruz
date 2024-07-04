@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">iamin</string>
+    <string name="events_iamin">Events I am in</string>
+    <string name="event_image">Event image</string>
+</resources>

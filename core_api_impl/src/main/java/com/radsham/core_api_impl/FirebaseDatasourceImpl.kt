@@ -27,10 +27,6 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     private val firebaseStorageRef = Firebase.storage.reference
     private var firebaseAuth = Firebase.auth
 
-    override suspend fun getUserUid(): String {
-        return firebaseAuth.uid.toString()
-    }
-
     override suspend fun getCurrentUser(): User {
         val user = User(
             firebaseAuth.currentUser?.uid.toString(),
@@ -43,14 +39,10 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun getAllEvents(): Flow<List<EventEntity>> = callbackFlow {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val eventEntityList = dataSnapshot.children.find {
-                    it.key == "events"
-                }?.children?.map {
+                val eventEntityList = dataSnapshot.child("events").children.map {
                     it.getValue<EventEntity>()!!
                 }
-                if (eventEntityList != null) {
-                    trySend(eventEntityList)
-                }
+                trySend(eventEntityList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -61,12 +53,28 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
         awaitClose { firebaseDatabaseRef.removeEventListener(postListener) }
     }
 
+    override suspend fun getIamInEvents(): Flow<List<EventEntity>> =
+        callbackFlow {
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val eventEntityList = dataSnapshot.child("events").children.map {
+                        it.getValue<EventEntity>()!!
+                    }.filter { it.participants.containsKey(firebaseAuth.currentUser?.uid.toString()) }
+                    trySend(eventEntityList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("MyLog", "Failed to read value.", error.toException())
+                }
+            }
+            firebaseDatabaseRef.addValueEventListener(postListener)
+            awaitClose { firebaseDatabaseRef.removeEventListener(postListener) }
+        }
+
     override suspend fun getEvent(eventId: String): Flow<EventEntity> = callbackFlow {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val eventEntity: EventEntity? = dataSnapshot.children.find {
-                    it.key == "events"
-                }?.child(eventId)?.getValue<EventEntity>()
+                val eventEntity: EventEntity? = dataSnapshot.child("events").child(eventId).getValue<EventEntity>()
                 if (eventEntity != null) {
                     trySend(eventEntity)
                 }
@@ -83,6 +91,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun createNewEvent(
         eventEntity: EventEntity, eventCreateListener: EventCreateListener,
     ) {
+        eventEntity.apply { this.uid = firebaseAuth.uid.toString() }
         if (eventEntity.imageUri == "") {
             sendEventToDatabase(eventEntity, eventCreateListener)
         } else {
@@ -158,15 +167,11 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun getUserEventsList(): Flow<List<EventEntity>> = callbackFlow {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userEventEntityList = dataSnapshot.children.find {
-                    it.key == "events"
-                }?.children?.map {
+                val userEventEntityList = dataSnapshot.child("events").children.map {
                     it.getValue<EventEntity>()!!
-                }?.filter { it.uid == firebaseAuth.uid.toString() }
+                }.filter { it.uid == firebaseAuth.uid.toString() }
 
-                if (userEventEntityList != null) {
-                    trySend(userEventEntityList)
-                }
+                trySend(userEventEntityList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -180,6 +185,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun userSignOut() {
         firebaseAuth.signOut()
     }
+
     //TODO: add listener
     override suspend fun addParticipant(eventEntityId: String, participantUid: String) {
         firebaseDatabaseRef.child("events").child(eventEntityId).child("participants")
@@ -190,6 +196,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
                 Log.d("MyLog", "addParticipant OnFailure $it")
             }
     }
+
     //TODO: add listener
     override suspend fun excludeParticipant(eventEntityId: String, participantUid: String) {
         firebaseDatabaseRef.child("events").child(eventEntityId).child("participants")
@@ -200,6 +207,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
                 Log.d("MyLog", "excludeParticipant OnFailure $it")
             }
     }
+
     //TODO: add listener
     override suspend fun deleteEvent(deleteEventId: String) {
         firebaseDatabaseRef.child("events").child(deleteEventId).removeValue()

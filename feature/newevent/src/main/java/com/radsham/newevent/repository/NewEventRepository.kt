@@ -10,7 +10,7 @@ class NewEventRepository @Inject constructor(
 ) {
     suspend fun createNewEvent(eventEntity: EventEntity, eventCreateListener: EventCreateListener) {
         firebaseDatasource.createNewEvent(
-            eventEntity.apply { this.uid = firebaseDatasource.getUserUid() },
+            eventEntity,
             eventCreateListener
         )
     }

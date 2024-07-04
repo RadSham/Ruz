@@ -64,5 +64,11 @@ fun SetupNavGraph(
             paddingValues,
             showBottomNavigationBarListener
         )
+        featureProvider[NavScreen.IAMIN]?.registerGraph(
+            this,
+            navController,
+            paddingValues,
+            showBottomNavigationBarListener
+        )
     }
 }

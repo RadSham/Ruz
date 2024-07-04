@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.radsham.core_api.NavScreen
 import com.radsham.main.model.BottomNavigationItem
 
 @Composable
@@ -40,7 +41,7 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = {
                     navigationSelectedItem = index
                     navController.navigate(navigationItem.route) {
-                        popUpTo(BottomNavigationBarScreens.Home.route) {
+                        popUpTo(NavScreen.HOME_SCREEN) {
                             saveState = true
                         }
                         launchSingleTop = true

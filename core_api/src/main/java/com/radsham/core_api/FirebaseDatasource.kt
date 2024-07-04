@@ -8,7 +8,6 @@ import com.radsham.core_api.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface FirebaseDatasource {
-    suspend fun getUserUid(): String
     suspend fun getCurrentUser(): User
     suspend fun getAllEvents(): Flow<List<EventEntity>>
     suspend fun getEvent(eventId: String): Flow<EventEntity>
@@ -20,5 +19,6 @@ interface FirebaseDatasource {
     suspend fun addParticipant(eventEntityId: String, participantUid: String)
     suspend fun excludeParticipant(eventEntityId: String, participantUid: String)
     suspend fun deleteEvent(deleteEventId: String)
+    suspend fun getIamInEvents(): Flow<List<EventEntity>>
 }
 

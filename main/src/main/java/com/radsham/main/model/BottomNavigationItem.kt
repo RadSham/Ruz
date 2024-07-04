@@ -4,9 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.radsham.main.BottomNavigationBarScreens
+import com.radsham.core_api.NavScreen
 
 data class BottomNavigationItem(
     val label: String = "",
@@ -18,22 +17,17 @@ data class BottomNavigationItem(
             BottomNavigationItem(
                 label = "Home",
                 icon = Icons.Filled.Home,
-                route = BottomNavigationBarScreens.Home.route
-            ),
-            BottomNavigationItem(
-                label = "Search",
-                icon = Icons.Filled.Search,
-                route = BottomNavigationBarScreens.Search.route
+                route = NavScreen.HOME_SCREEN
             ),
             BottomNavigationItem(
                 label = "IamIn",
                 icon = Icons.Filled.FavoriteBorder,
-                route = BottomNavigationBarScreens.IamIn.route
+                route = NavScreen.IAMIN
             ),
             BottomNavigationItem(
                 label = "CheckUser",
                 icon = Icons.Filled.AccountCircle,
-                route = BottomNavigationBarScreens.CheckUser.route
+                route = NavScreen.CHECKUSER
             )
         )
     }
