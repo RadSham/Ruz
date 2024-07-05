@@ -4,7 +4,6 @@ object NavScreen{
     const val SPLASH_SCREEN ="SplashScreen"
     const val HOME_SCREEN = "HomeScreen"
     const val EVENT_DETAILS_SCREEN = "EventDetailsScreen"
-    const val SEARCH = "Search"
     const val IAMIN = "IamIn"
     const val CHECKUSER = "CheckUser"
     const val ACCOUNT = "${CHECKUSER}_Account"

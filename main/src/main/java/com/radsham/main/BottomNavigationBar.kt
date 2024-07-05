@@ -22,19 +22,16 @@ fun BottomNavigationBar(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         BottomNavigationItem().bottomNavigationItems().forEachIndexed { index, navigationItem ->
+            val selected = currentDestination?.hierarchy?.any {
+                it.route == navigationItem.route || it.route?.startsWith(
+                    navigationItem.route
+                ) ?: false
+            } == true
             NavigationBarItem(
-                selected = currentDestination?.hierarchy?.any {
-                    it.route == navigationItem.route || it.route?.startsWith(
-                        navigationItem.route
-                    ) ?: false
-                } == true,
-                /*label = {
-                    Text(navigationItem.label)
-                },
-                alwaysShowLabel = false,*/
+                selected = selected,
                 icon = {
                     Icon(
-                        navigationItem.icon,
+                        if (selected) navigationItem.iconFilled else navigationItem.iconOutlined,
                         contentDescription = navigationItem.label
                     )
                 },

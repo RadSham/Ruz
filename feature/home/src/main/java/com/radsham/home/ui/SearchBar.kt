@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
@@ -34,16 +35,20 @@ import com.radsham.home.R
 
 @Composable
 fun SearchView(
-    query: MutableState<String>
+    query: MutableState<String>,
 ) {
     val focusManager = LocalFocusManager.current
     Box(
         modifier = Modifier
             .height(48.dp)
-            .border(border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.secondary))
+            .border(
+                border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.secondary),
+                shape = RoundedCornerShape(10.dp)
+            )
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
-        contentAlignment = Alignment.Center    ) {
+        contentAlignment = Alignment.Center
+    ) {
         val customTextSelectionColors = TextSelectionColors(
             handleColor = MaterialTheme.colorScheme.secondary,
             backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f)

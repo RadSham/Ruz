@@ -1,7 +1,6 @@
 package com.example.checkuser.viewmodel
 
 import android.content.Context
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,19 +14,16 @@ import javax.inject.Inject
 @HiltViewModel
 class CheckUserViewModel @Inject constructor(
     @ApplicationContext val appContext: Context,
-    private val checkUserRepository: CheckUserRepository
+    private val checkUserRepository: CheckUserRepository,
 ) : ViewModel() {
 
     private val _currentUserState = mutableStateOf(User("null", "", ""))
-    val currentUserState: State<User>
-        get() = _currentUserState
 
-    init {
-        getCurrentUser()
-    }
-
-    fun getCurrentUser() = viewModelScope.launch {
-        _currentUserState.value = checkUserRepository.getCurrentUser()
+    fun getCurrentUser(): User {
+        viewModelScope.launch {
+            _currentUserState.value = checkUserRepository.getCurrentUser()
+        }
+        return _currentUserState.value
     }
 
 }

@@ -35,10 +35,17 @@ fun AllEvents(
     paddingValues: PaddingValues,
     navController: NavHostController,
     eventsList: List<EventEntity>,
-    query: MutableState<String>
+    queryName: MutableState<String>,
+    categoriesSelectedList: List<String>
 ) {
     val filteredList =
-        eventsList.filter { it.name.contains(query.value) || it.category.contains(query.value) }
+        eventsList.filter {
+            if (categoriesSelectedList.isEmpty()) {
+                it.name.contains(queryName.value) || categoriesSelectedList.contains(it.category)
+            } else{
+                it.name.contains(queryName.value) && categoriesSelectedList.contains(it.category)
+            }
+        }
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
         items(filteredList) {
             EventCard(navController, it)
