@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,7 +57,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
             var selectedImagesUri: Uri by remember { mutableStateOf("".toUri()) }
             var nameText by remember { mutableStateOf("") }
             var locationText by remember { mutableStateOf("") }
-            var categoryText by remember { mutableStateOf("") }
+            val categoryText = remember { mutableStateMapOf<String, String>() }
             var descriptionText by remember { mutableStateOf("") }
             var contactsText by remember { mutableStateOf("") }
 
@@ -143,32 +144,8 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     isError = isErrorLocation
                 )
             }
-            Row {
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = categoryText,
-                    onValueChange = {
-                        categoryText = it
-                        isErrorCategory = false
-                    },
-                    label = { Text(stringResource(R.string.category)) },
-                    trailingIcon = {
-                        if (categoryText.isNotEmpty()) {
-                            IconButton(onClick = { categoryText = "" }) {
-                                Icon(
-                                    imageVector = Icons.Outlined.Close, contentDescription = null
-                                )
-                            }
-                        }
-                    },
-                    maxLines = 3,
-                    supportingText = {
-                        if (isErrorCategory) {
-                            Text(stringResource(R.string.empty_category))
-                        }
-                    },
-                    isError = isErrorCategory
-                )
+            CategoriesRow { listCategories ->
+                listCategories.forEach { categoryText[it] = it }
             }
             Row {
                 TextField(
@@ -183,7 +160,8 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                         if (descriptionText.isNotEmpty()) {
                             IconButton(onClick = { descriptionText = "" }) {
                                 Icon(
-                                    imageVector = Icons.Outlined.Close, contentDescription = null
+                                    imageVector = Icons.Outlined.Close,
+                                    contentDescription = null
                                 )
                             }
                         }
@@ -210,7 +188,8 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                         if (contactsText.isNotEmpty()) {
                             IconButton(onClick = { contactsText = "" }) {
                                 Icon(
-                                    imageVector = Icons.Outlined.Close, contentDescription = null
+                                    imageVector = Icons.Outlined.Close,
+                                    contentDescription = null
                                 )
                             }
                         }
@@ -234,7 +213,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                     isErrorLocation = true
                     isAllFilled = false
                 }
-                if (categoryText == "") {
+                if (categoryText.isEmpty()) {
                     isErrorCategory = true
                     isAllFilled = false
                 }
@@ -291,3 +270,4 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
         }
     }
 }
+

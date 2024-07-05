@@ -39,11 +39,17 @@ fun AllEvents(
     categoriesSelectedList: List<String>
 ) {
     val filteredList =
-        eventsList.filter {
+        eventsList.filter { eventEntity ->
             if (categoriesSelectedList.isEmpty()) {
-                it.name.contains(queryName.value) || categoriesSelectedList.contains(it.category)
-            } else{
-                it.name.contains(queryName.value) && categoriesSelectedList.contains(it.category)
+                eventEntity.name.contains(queryName.value) || checkSelectedCategory(
+                    eventEntity,
+                    categoriesSelectedList
+                )
+            } else {
+                eventEntity.name.contains(queryName.value) && checkSelectedCategory(
+                    eventEntity,
+                    categoriesSelectedList
+                )
             }
         }
     LazyColumn(modifier = Modifier.padding(paddingValues)) {
@@ -51,6 +57,13 @@ fun AllEvents(
             EventCard(navController, it)
         }
     }
+}
+
+fun checkSelectedCategory(eventEntity: EventEntity, categoriesSelectedList: List<String>): Boolean {
+    for (str in categoriesSelectedList) {
+        if (eventEntity.category.containsKey(str)) return true
+    }
+    return false
 }
 
 @Composable

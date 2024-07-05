@@ -94,7 +94,7 @@ fun EventDetails(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(text = stringResource(R.string.category))
-                    Text(text = eventEntity.category)
+                    Text(text = eventEntity.category.keys.joinToString(", "))
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
