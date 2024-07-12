@@ -1,10 +1,12 @@
 [versions]
 activity = "1.9.0@aar"
 agp = "8.4.1"
+androidXTestVersion = "1.6.1"
 coilCompose = "2.5.0"
 coreSplashscreen = "1.1.0-rc01"
 firebaseBom = "32.8.1"
 hiltAndroid = "2.51.1"
+kotlinxCoroutinesTest = "1.7.3"
 ksp = "1.9.23-1.0.19"
 gms = "4.4.2"
 hiltNavigationCompose = "1.2.0"
@@ -19,14 +21,19 @@ composeBom = "2024.05.00"
 appcompat = "1.7.0"
 lottieVersion = "6.4.0"
 material = "1.12.0"
+mockitoCore = "5.12.0"
+mockitoKotlin = "3.2.0"
+mockk = "1.13.11"
 navVersion = "2.7.7"
 kotlinComposeCompiler = "1.5.13"
 firebaseDatabase = "21.0.0"
 firebaseDatabaseKtx = "21.0.0"
 firebaseStorageKtx = "21.0.0"
+turbine = "0.8.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+androidx-core = { module = "androidx.test:core", version.ref = "androidXTestVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -47,8 +54,13 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion" }
 android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ui = { module = "androidx.compose.ui:ui" }
 ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
