@@ -23,10 +23,16 @@ class IamInViewModel @Inject constructor(
     val viewState = _viewState.asStateFlow()
 
     fun fetchIamInEvents() = viewModelScope.launch {
-        iamInRepository.listenForIamInEvents()
-            .catch { _viewState.value = Result.Error(it) }
-            .collect {
-                _viewState.emit(Result.Success(it))
+        try {
+            iamInRepository.listenForIamInEvents()
+                .catch { _viewState.value = Result.Error(it) }
+                .collect {
+                    _viewState.emit(Result.Success(it))
+                }
+        } catch (ex: Exception) {
+            when (ex) {
+                is RuntimeException -> _viewState.emit(Result.Error(ex))
             }
+        }
     }
 }

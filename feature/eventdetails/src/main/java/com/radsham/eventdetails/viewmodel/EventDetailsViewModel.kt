@@ -43,9 +43,16 @@ class EventDetailsViewModel @Inject constructor(
     }
 
     fun fetchEvent(eventId: String) = viewModelScope.launch {
-        eventDetailsRepository.listenForEvent(eventId).catch { _viewState.value = Result.Error(it) }
-            .collect {
-                _viewState.emit(Result.Success(it))
+        try {
+            eventDetailsRepository.listenForEvent(eventId)
+                .catch { _viewState.value = Result.Error(it) }
+                .collect {
+                    _viewState.emit(Result.Success(it))
+                }
+        } catch (ex: Exception) {
+            when (ex) {
+                is RuntimeException -> _viewState.emit(Result.Error(ex))
             }
+        }
     }
 }

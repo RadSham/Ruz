@@ -33,17 +33,23 @@ class AccountViewModel @Inject constructor(
     }
 
     fun getUserEventsList() = viewModelScope.launch {
-        accountRepository.getUserEventsList().catch { _viewState.value = Result.Error(it) }
-            .collect {
-                _viewState.emit(Result.Success(it))
+        try {
+            accountRepository.getUserEventsList().catch { _viewState.value = Result.Error(it) }
+                .collect {
+                    _viewState.emit(Result.Success(it))
+                }
+        } catch (ex: Exception) {
+            when (ex) {
+                is RuntimeException -> _viewState.emit(Result.Error(ex))
             }
+        }
     }
 
     fun deleteEvent(deleteEventId: String) = viewModelScope.launch {
         accountRepository.deleteEvent(deleteEventId)
     }
 
-    fun userSignOut()= viewModelScope.launch {
+    fun userSignOut() = viewModelScope.launch {
         accountRepository.userSignOut()
     }
 }
