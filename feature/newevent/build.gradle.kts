@@ -47,6 +47,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Test
+    testImplementation (libs.androidx.core)
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+    testImplementation (libs.mockk)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.turbine)
+
     //Compose
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
