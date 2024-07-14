@@ -16,6 +16,6 @@ abstract class SignInFeatureApiModule {
 
     @Binds
     @IntoMap
-    @StringKey(NavScreen.SIGN_IN   )
+    @StringKey(NavScreen.SIGN_IN_SCREEN   )
     abstract fun bindModuleApi(impl: SignInFeatureApiImpl): FeatureApi
 }

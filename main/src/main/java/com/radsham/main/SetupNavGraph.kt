@@ -40,31 +40,31 @@ fun SetupNavGraph(
             paddingValues,
             showBottomNavigationBarListener
         )
-        featureProvider[NavScreen.AUTH]?.registerGraph(
+        featureProvider[NavScreen.SIGN_UP_SCREEN]?.registerGraph(
             this,
             navController,
             paddingValues,
             showBottomNavigationBarListener
         )
-        featureProvider[NavScreen.ACCOUNT]?.registerGraph(
+        featureProvider[NavScreen.ACCOUNT_SCREEN]?.registerGraph(
             this,
             navController,
             paddingValues,
             showBottomNavigationBarListener
         )
-        featureProvider[NavScreen.SIGN_IN]?.registerGraph(
+        featureProvider[NavScreen.SIGN_IN_SCREEN]?.registerGraph(
             this,
             navController,
             paddingValues,
             showBottomNavigationBarListener
         )
-        featureProvider[NavScreen.CHECKUSER]?.registerGraph(
+        featureProvider[NavScreen.CHECKUSER_SCREEN]?.registerGraph(
             this,
             navController,
             paddingValues,
             showBottomNavigationBarListener
         )
-        featureProvider[NavScreen.IAMIN]?.registerGraph(
+        featureProvider[NavScreen.IAMIN_SCREEN]?.registerGraph(
             this,
             navController,
             paddingValues,

@@ -30,8 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.radsham.account.R
 import com.radsham.account.viewmodel.AccountViewModel
-import com.radsham.auth.R
 import com.radsham.core_api.NavScreen
 import com.radsham.core_api.Result
 import com.radsham.core_api.listener.ShowBottomNavigationBarListener

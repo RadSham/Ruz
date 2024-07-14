@@ -16,6 +16,6 @@ abstract class AccountFeatureApiModule {
 
     @Binds
     @IntoMap
-    @StringKey(NavScreen.ACCOUNT)
+    @StringKey(NavScreen.ACCOUNT_SCREEN)
     abstract fun bindModuleApi(impl: AccountFeatureApiImpl): FeatureApi
 }

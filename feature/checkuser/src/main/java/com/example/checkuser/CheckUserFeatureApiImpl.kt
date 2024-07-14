@@ -17,7 +17,7 @@ class CheckUserFeatureApiImpl @Inject constructor() : FeatureApi {
         paddingValues: PaddingValues,
         showBottomNavigationBarListener: ShowBottomNavigationBarListener
     ) {
-        navGraphBuilder.composable(NavScreen.CHECKUSER) {
+        navGraphBuilder.composable(NavScreen.CHECKUSER_SCREEN) {
             CheckUserScreen(navController, paddingValues, showBottomNavigationBarListener)
         }
     }

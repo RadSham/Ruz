@@ -1,6 +1,6 @@
-package com.example.checkuser.di
+package com.radsham.signup.di
 
-import com.example.checkuser.CheckUserFeatureApiImpl
+import com.radsham.signup.SignUpFeatureApiImpl
 import com.radsham.core_api.FeatureApi
 import com.radsham.core_api.NavScreen
 import dagger.Binds
@@ -12,10 +12,10 @@ import dagger.multibindings.StringKey
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CheckUserFeatureApiModule {
+abstract class SignUpFeatureApiModule {
 
     @Binds
     @IntoMap
-    @StringKey(NavScreen.CHECKUSER_SCREEN)
-    abstract fun bindModuleApi(impl: CheckUserFeatureApiImpl): FeatureApi
+    @StringKey(NavScreen.SIGN_UP_SCREEN)
+    abstract fun bindModuleApi(impl: SignUpFeatureApiImpl): FeatureApi
 }

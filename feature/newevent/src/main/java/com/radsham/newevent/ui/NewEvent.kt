@@ -245,7 +245,7 @@ fun NewEvent(paddingValues: PaddingValues, navController: NavHostController) {
                                     "Event successfully created",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                navController.navigate(NavScreen.ACCOUNT) {
+                                navController.navigate(NavScreen.ACCOUNT_SCREEN) {
                                     popUpTo(NavScreen.NEW_EVENT_SCREEN) {
                                         inclusive = true
                                     }

@@ -10,6 +10,10 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.radsham.core_api.NavScreen
 
+const val HOME_BN_ITEM = "Home"
+const val IAMIN_BN_ITEM = "IamIn"
+const val CHECKUSER_BN_ITEM = "CheckUser"
+
 data class BottomNavigationItem(
     val label: String = "",
     val iconFilled: ImageVector = Icons.Filled.Home,
@@ -19,22 +23,22 @@ data class BottomNavigationItem(
     fun bottomNavigationItems(): List<BottomNavigationItem> {
         return listOf(
             BottomNavigationItem(
-                label = "Home",
+                label = HOME_BN_ITEM,
                 iconFilled = Icons.Filled.Home,
                 iconOutlined = Icons.Outlined.Home,
                 route = NavScreen.HOME_SCREEN
             ),
             BottomNavigationItem(
-                label = "IamIn",
+                label = IAMIN_BN_ITEM,
                 iconFilled = Icons.Filled.Favorite,
                 iconOutlined = Icons.Outlined.FavoriteBorder,
-                route = NavScreen.IAMIN
+                route = NavScreen.IAMIN_SCREEN
             ),
             BottomNavigationItem(
-                label = "CheckUser",
+                label = CHECKUSER_BN_ITEM,
                 iconFilled = Icons.Filled.AccountCircle,
                 iconOutlined = Icons.Outlined.AccountCircle,
-                route = NavScreen.CHECKUSER
+                route = NavScreen.CHECKUSER_SCREEN
             )
         )
     }

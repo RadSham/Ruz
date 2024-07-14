@@ -17,7 +17,7 @@ class SignInFeatureApiImpl @Inject constructor() : FeatureApi {
         paddingValues: PaddingValues,
         showBottomNavigationBarListener: ShowBottomNavigationBarListener
     ) {
-        navGraphBuilder.composable(NavScreen.SIGN_IN) {
+        navGraphBuilder.composable(NavScreen.SIGN_IN_SCREEN) {
             SignInScreen(navController, paddingValues, showBottomNavigationBarListener)
         }
     }

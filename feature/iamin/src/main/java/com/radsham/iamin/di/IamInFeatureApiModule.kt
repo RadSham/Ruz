@@ -16,6 +16,6 @@ abstract class IamInFeatureApiModule {
 
     @Binds
     @IntoMap
-    @StringKey(NavScreen.IAMIN)
+    @StringKey(NavScreen.IAMIN_SCREEN)
     abstract fun bindModuleApi(impl: IamInFeatureApiImpl): FeatureApi
 }

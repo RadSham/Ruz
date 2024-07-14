@@ -17,7 +17,7 @@ class AccountFeatureApiImpl @Inject constructor() : FeatureApi {
         paddingValues: PaddingValues,
         showBottomNavigationBarListener: ShowBottomNavigationBarListener
     ) {
-        navGraphBuilder.composable(NavScreen.ACCOUNT) {
+        navGraphBuilder.composable(NavScreen.ACCOUNT_SCREEN) {
             AccountScreen(navController, paddingValues, showBottomNavigationBarListener)
         }
     }

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.radsham.main"
+    namespace = "com.radsham.signup"
     compileSdk = 34
 
     defaultConfig {
@@ -47,18 +47,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //Test
-    androidTestImplementation (libs.hilt.android.testing)
-    androidTestImplementation (libs.androidx.ui.test.junit4)
-    kspAndroidTest (libs.hilt.android.compiler)
-    debugImplementation (libs.androidx.ui.test.manifest)
-    androidTestImplementation (libs.mockk.android)
-    androidTestImplementation (libs.androidx.navigation.testing)
-
     //Compose
     implementation(libs.androidx.material3)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+
+    //Firebase Authentication
+    implementation(platform(libs.firebase.bom))
+
+    //Preview
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
 
     // Dependency injection
     implementation(libs.hilt.android)
@@ -68,6 +67,6 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Features
+    //Feature
     implementation(project(":core_api"))
 }

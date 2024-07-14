@@ -90,7 +90,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:newevent"))
     implementation(project(":feature:eventdetails"))
-    implementation(project(":feature:auth"))
+    implementation(project(":feature:signup"))
     implementation(project(":feature:account"))
     implementation(project(":feature:signin"))
     implementation(project(":feature:checkuser"))

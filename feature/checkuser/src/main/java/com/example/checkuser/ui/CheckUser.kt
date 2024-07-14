@@ -30,23 +30,23 @@ fun CheckUser(
     ) {
         if (currentUser.uid == "null") {
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
-                navController.navigate(NavScreen.SIGN_IN) {
-                    popUpTo(NavScreen.CHECKUSER)
+                navController.navigate(NavScreen.SIGN_IN_SCREEN) {
+                    popUpTo(NavScreen.CHECKUSER_SCREEN)
                     launchSingleTop = true
                 }
             }) {
                 Text(text = stringResource(id = R.string.sign_in))
             }
             Button(modifier = Modifier.fillMaxWidth(), onClick = {
-                navController.navigate(NavScreen.AUTH) {
-                    popUpTo(NavScreen.CHECKUSER)
+                navController.navigate(NavScreen.SIGN_UP_SCREEN) {
+                    popUpTo(NavScreen.CHECKUSER_SCREEN)
                     launchSingleTop = true
                 }
             }) {
                 Text(text = stringResource(id = R.string.sign_up))
             }
         } else {
-            navController.navigate(NavScreen.ACCOUNT) {
+            navController.navigate(NavScreen.ACCOUNT_SCREEN) {
                 popUpTo(NavScreen.HOME_SCREEN) {
                     saveState = true
                 }

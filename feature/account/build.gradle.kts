@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.radsham.auth"
+    namespace = "com.radsham.account"
     compileSdk = 34
 
     defaultConfig {

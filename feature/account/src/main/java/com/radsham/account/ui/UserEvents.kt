@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.radsham.auth.R
+import com.radsham.account.R
 import com.radsham.core_api.NavScreen
 import com.radsham.core_api.model.EventEntity
 
