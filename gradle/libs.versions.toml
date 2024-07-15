@@ -10,6 +10,7 @@ hiltAndroidTesting = "2.44"
 kotlinxCoroutinesTest = "1.8.1"
 ksp = "1.9.23-1.0.19"
 gms = "4.4.2"
+tripletPlay = "3.7.0"
 hiltNavigationCompose = "1.2.0"
 kotlin = "1.9.23"
 coreKtx = "1.13.1"
@@ -87,5 +88,5 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
-
+triplet-play = { id = "com.github.triplet.play", version.ref = "tripletPlay" }
 

@@ -1,4 +1,4 @@
-**Ruz** is an application for organizing events.<br />Create events and find out the number of participants.
+**Ruz** is an application for organizing events.<br />Single activity multi-module Android application with Jetpack Compose and MVVM pattern.
 
 # Features
 - **Sign Up/In**: Registration and login to the user's personal account. Only registered users can create and participate in events

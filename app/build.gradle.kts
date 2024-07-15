@@ -1,10 +1,23 @@
+import java.util.Properties
+import java.io.FileInputStream
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.gms)
+    alias(libs.plugins.triplet.play)
 }
+
+val keystorePropertiesFile = rootProject.file("/.gradle/keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+val keystoreProperties = Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.radsham.ruz"
@@ -23,13 +36,20 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
+
     buildTypes {
         release {
+            isDebuggable = false
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -97,4 +117,14 @@ dependencies {
     implementation(project(":feature:iamin"))
     implementation(project(":core_api"))
     implementation(project(":core_api_impl"))
+}
+
+play {
+    val apiKeyFile = keystoreProperties["googlePlayApiKey"] as String
+    serviceAccountCredentials.set(file(apiKeyFile))
+    userFraction.set(0.5)
+    updatePriority.set(2)
+    releaseStatus.set(ReleaseStatus.IN_PROGRESS)
+    releaseName.set("My custom release name")
+    track.set("production")
 }
