@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         minSdk = 21
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.radsham.main.runner.HiltTestRunner"
     }
 
     buildTypes {
@@ -54,6 +54,9 @@ dependencies {
     debugImplementation (libs.androidx.ui.test.manifest)
     androidTestImplementation (libs.mockk.android)
     androidTestImplementation (libs.androidx.navigation.testing)
+    androidTestImplementation(project(":feature:splash"))
+    androidTestImplementation(project(":feature:home"))
+    androidTestImplementation(project(":core_api_impl"))
 
     //Compose
     implementation(libs.androidx.material3)

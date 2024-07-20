@@ -23,4 +23,4 @@
 
 # Tests
 - **Unit tests**<br />AccountViewModelTest.kt, EventDetailsViewModelTest.kt, HomeViewModelTest.kt, IamInViewModelTest.kt, NewEventRepositoryTest.kt<br />
-- **UI test**<br />BottomNavigationBarKtTest.kt
+- **UI test**<br />BottomNavigationBarKtTest.kt, SplashScreenKtTest.kt

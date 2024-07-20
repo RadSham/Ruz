@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -19,7 +20,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController, showBottomNavigationBarListener: ShowBottomNavigationBarListener) {
     showBottomNavigationBarListener.showBar(false)
-    LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = "splash") {
         delay(2000)
         navController.navigate(NavScreen.HOME_SCREEN) {
             popUpTo(NavScreen.SPLASH_SCREEN) {
@@ -30,7 +31,10 @@ fun SplashScreen(navController: NavHostController, showBottomNavigationBarListen
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash_screen_lottie))
 
-    Box(modifier = Modifier.systemBarsPadding()) {
+    Box(modifier = Modifier
+        .systemBarsPadding()
+        .testTag(NavScreen.SPLASH_SCREEN)
+    ) {
         Column {
             LottieAnimation(composition = composition)
         }
