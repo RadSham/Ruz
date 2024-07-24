@@ -91,28 +91,34 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
     override suspend fun createNewEvent(
         eventEntity: EventEntity, eventCreateListener: EventCreateListener,
     ) {
-        eventEntity.apply { this.uid = firebaseAuth.uid.toString() }
-        if (eventEntity.imageUri == "") {
-            sendEventToDatabase(eventEntity, eventCreateListener)
-        } else {
-            val imageRef = firebaseStorageRef.child("images/${eventEntity.id}.jpg")
-            val uploadTask = imageRef.putFile(eventEntity.imageUri.toUri())
-            uploadTask.continueWithTask { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
+        firebaseAuth.currentUser?.reload()
+        if (firebaseAuth.currentUser?.isEmailVerified == true) {
+            eventEntity.apply { this.uid = firebaseAuth.uid.toString() }
+            if (eventEntity.imageUri == "") {
+                sendEventToDatabase(eventEntity, eventCreateListener)
+            } else {
+                val imageRef = firebaseStorageRef.child("images/${eventEntity.id}.jpg")
+                val uploadTask = imageRef.putFile(eventEntity.imageUri.toUri())
+                uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    imageRef.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        eventEntity.imageUri = downloadUri.toString()
+                        sendEventToDatabase(eventEntity, eventCreateListener)
+                    } else {
+                        eventCreateListener.onFailure(task.exception?.message)
                     }
                 }
-                imageRef.downloadUrl
-            }.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    eventEntity.imageUri = downloadUri.toString()
-                    sendEventToDatabase(eventEntity, eventCreateListener)
-                } else {
-                    eventCreateListener.onFailure(task.exception?.message)
-                }
             }
+        } else {
+            eventCreateListener.onFailure("Verification email has been sent to ${firebaseAuth.currentUser?.email}. Please verify your account")
+            firebaseAuth.currentUser?.sendEmailVerification()
         }
     }
 
@@ -135,6 +141,7 @@ class FirebaseDatasourceImpl @Inject constructor() : FirebaseDatasource {
         firebaseAuth.createUserWithEmailAndPassword(user.email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    firebaseAuth.currentUser?.sendEmailVerification()
                     firebaseAuth.currentUser!!.updateProfile(userProfileChangeRequest {
                         displayName = user.nickname
                     }).addOnCompleteListener { task2 ->
